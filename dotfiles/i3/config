@@ -1,0 +1,178 @@
+set $mod Mod4
+#FONT
+font pango:JetBrains Mono 8
+
+#XDG AUTOSTART
+exec --no-startup-id dex --autostart --environment i3
+
+# XSS LOCK I3LOCK
+#Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+#NETWORK
+exec --no-startup-id nm-applet
+
+# Use Pactl To Adjust Volume In Pulseaudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume #@DEFAULT_SINK@ +10% && $refresh_i3status
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume #@DEFAULT_SINK@ -10% && $refresh_i3status
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ #toggle && $refresh_i3status
+#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute #@DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+#WALLPAPER
+exec_always --no-startup-id wal -i Wallpaper/Wallpaper\ current.jpg
+
+# POLYBAR
+exec_always --no-startup-id polybar-msg cmd quit
+exec_always --no-startup-id polybar
+
+#BORDER
+default_border pixel 3
+client.focused          #4A3835 #4A3835 #F0E6E2 #FF6FA1 #4A3835
+client.focused_inactive #302929 #302929 #C8BCB8 #6F625F #302929
+client.unfocused        #262222 #262222 #A89C99 #4A3835 #262222
+client.urgent           #302222 #302222 #F0E6E2 #FF6FA1 #302222
+gaps inner 6
+gaps outer 1
+
+#MEDIA CONTROLS
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+bindsym XF86AudioLowerVolume exec --no-startup-id "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+bindsym XF86AudioMute exec --no-startup-id "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
+#BRIGHTNESS
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+
+#FLOATING WINDOWS
+floating_modifier $mod
+
+# Move Tiling Windows Via Drag & Drop By Left-Clicking Into The Title Bar,
+tiling_drag modifier titlebar
+
+# start a terminal
+bindsym $mod+Return exec kitty
+
+# kill focused window
+bindsym $mod+q kill
+
+#ROFI
+bindsym $mod+d exec --no-startup-id rofi -show drun
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+#USING CURSOR
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move Focused Window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# Alternatively, You Can Use The Cursor Keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split In Horizontal Orientation
+bindsym $mod+h split h
+
+# Split In Vertical Orientation
+bindsym $mod+v split v
+
+# Enter Fullscreen Mode For The Focused Container
+bindsym $mod+f fullscreen toggle
+
+# Change Container Layout (Stacked, Tabbed, Toggle Split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle Tiling / Floating
+bindsym $mod+Shift+space floating toggle
+
+# Change Focus Between Tiling / Floating Windows
+bindsym $mod+space focus mode_toggle
+
+# Focus The Parent Container
+bindsym $mod+a focus parent
+
+#WORKSPACE NAMES
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch To Workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move Focused Container To Workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Reload The Configuration File
+bindsym $mod+Shift+c reload
+
+#RESTART I3
+bindsym $mod+Shift+r restart
+
+# Exit I3 (Logs You Out Of Your X Session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Resize Window
+mode "resize" {
+
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"

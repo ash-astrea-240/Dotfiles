@@ -1,0 +1,69 @@
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+
+configuration {
+    font: "JetBrains Mono 11";
+    show-icons: true;
+    drun-display-format: "{name}";
+}
+
+* {
+    background: @background;
+    foreground: @foreground;
+    selected: @color5;
+}
+
+
+window {
+    width: 40%;
+    border: 2px;
+    border-color: @pink;
+    border-radius: 12px;
+    background-color: @bg;
+    padding: 20px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing: 12px;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 8px;
+    padding: 10px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @fg;
+}
+
+entry {
+    text-color: @fg;
+}
+
+listview {
+    lines: 8;
+    spacing: 6px;
+    scrollbar: false;
+}
+
+element {
+    padding: 8px;
+    border-radius: 7px;
+}
+
+element-text {
+    text-color: @fg;
+}
+
+element selected {
+    background-color: @pink;
+}
+
+element selected element-text {
+    text-color: @bg;
+}
+
+@theme "/usr/share/rofi/themes/material.rasi"
